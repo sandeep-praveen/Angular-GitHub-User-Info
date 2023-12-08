@@ -1,0 +1,65 @@
+.card-title {
+    color: #4e93ce;
+}
+
+.position-absolute {
+    top: 51%;
+    left: 89%;
+}
+
+.option-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.option-item {
+    background-color: #4e93ce;
+    color: white;
+    font-size: 15px;
+    padding: 5px 15px;
+    margin: 5px;
+    border-radius: 6px;
+}
+
+.pagination-list {
+    list-style: none;
+    display: flex;
+    padding: 0;
+}
+
+.pagination-item {
+    padding: 5px 10px;
+    margin: 5px;
+    border: 1px solid #4e93ce;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #4e93ce;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-item.active {
+    background-color: #4e93ce;
+    color: #fff;
+}
+
+.pagination-item:hover {
+    background-color: #1f6eb4;
+    border-color: #1f6eb4;
+    color: #fff;
+}
+
+button {
+    width: 12%;
+    color: #4e93ce;
+    padding: 5px;
+    background: none;
+    border: 1px solid #dee2e6;
+    border-radius: 16px;
+}
+
+button[disabled] {
+    background-color: #dee2e6;
+    color: #888;
+    cursor: not-allowed;
+}

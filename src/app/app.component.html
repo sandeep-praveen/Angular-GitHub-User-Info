@@ -1,0 +1,61 @@
+<div class="skeleton-loader" *ngIf="isLoading">
+  <img src="/assets/loader.gif" class="w-100">
+</div>
+<div class="p-3" *ngIf="!isLoading">
+  <div class="row p-3">
+    <div class="col-md-3 text-center">
+      <img [src]="userDetails?.avatar_url ? userDetails?.avatar_url : '/assets/github.png'" class="rounded-circle img-fluid p-1 w-75 border border-secondary">
+      <p class="pt-4"><a href="https://github.com/{{ userDetails?.login }}" class="text-decoration-none text-dark"><i
+            class="bi bi-github"></i> https://github.com/{{ userDetails?.login }}</a></p>
+    </div>
+    <div class="col-md-6 pt-md-5">
+      <h3>{{ userDetails?.name }}</h3>
+      <p class="mb-1">{{ userDetails?.bio }}</p>
+      <p class="mb-3" *ngIf="userDetails?.location"><i class="bi bi-geo-alt-fill"></i> {{ userDetails?.location }}</p>
+      <p *ngIf="userDetails?.twitter_username"><a href="https://twitter.com/{{ userDetails?.twitter_username }}" class="text-decoration-none text-dark"><i
+            class="bi bi-twitter-x"></i> https://twitter.com/{{ userDetails?.twitter_username }}</a></p>
+    </div>
+    <div class="col-md-3 pe-md-5">
+      <div class="position-relative">
+        <p class="card-title pb-1">GitHub Username</p>
+        <input type="text" class="form-control" id="userName" [(ngModel)]="username" (keyup.enter)="loadUserData()" placeholder="Enter username">
+        <i class="bi bi-search position-absolute" (click)="loadUserData()"></i>
+      </div>
+      <small class="text-danger">{{ errorMessage }}</small>
+    </div>
+  </div>
+  <div class="row px-4" *ngIf="this.userDetails?.public_repos > 0; else noRepos">
+    <div class="col-md-6 mb-3" *ngFor="let repo of repositories">
+      <div class="card">
+        <div class="card-body">
+          <h4><a class="card-title text-decoration-none"
+              href="https://github.com/{{ userDetails?.login }}/{{ repo?.name }}">{{ repo?.name }}</a></h4>
+          <p class="card-text">{{ repo?.description }}</p>
+          <ul class="option-list list-unstyled">
+            <li *ngFor="let language of repo?.languages" class="option-item">{{ language }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="maxPageSize > 1 && this.userDetails?.public_repos > 10">
+      <div class="d-flex justify-content-center my-3">
+        <ul class="pagination-list">
+          <ng-container *ngFor="let page of displayedPages">
+            <li class="pagination-item" [class.active]="currentPage === page" (click)="goToPage(page)">{{ page }}</li>
+          </ng-container>
+        </ul>
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <button (click)="previousPage()" [disabled]="currentPage === 1" class="me-4"><i class="bi bi-arrow-left"></i>
+          Previous</button>
+        <button (click)="nextPage()" [disabled]="currentPage === maxPageSize">Next <i
+            class="bi bi-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+  <ng-template #noRepos>
+    <div class="d-flex justify-content-center pt-5">
+      <h1 class="text-muted">No public repositories found.</h1>
+    </div>
+  </ng-template>
+</div>
